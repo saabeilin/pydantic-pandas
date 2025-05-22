@@ -95,7 +95,9 @@ class DataFrameType:
         )
 
     @classmethod
-    def validate(cls, v: Any, info) -> pd.DataFrame:
+    def validate(
+        cls, v: Any, info: core_schema.ValidationInfo | None = None
+    ) -> pd.DataFrame:
         # First convert to DataFrame
         if isinstance(v, pd.DataFrame):
             df = v
@@ -195,11 +197,11 @@ class DataFrameType:
             # Add properties for each column in the schema
             for col_name, col_type in cls.expected_schema.items():
                 # Define the schema property type
-                if col_type == int:
+                if col_type is int:
                     schema_type = {"type": "integer"}
-                elif col_type == float:
+                elif col_type is float:
                     schema_type = {"type": "number"}
-                elif col_type == str:
+                elif col_type is str:
                     schema_type = {"type": "string"}
                 else:
                     schema_type = {

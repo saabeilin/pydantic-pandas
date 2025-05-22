@@ -59,6 +59,25 @@ def test_serialize_json():
     }
 
 
+def test_deserialize_json():
+    payload = {
+        "df": {
+            "schema": {
+                "int_column": "int",
+                "float_column": "float",
+                "str_column": "str",
+            },
+            "columns": {
+                "int_column": [1, 2, 3],
+                "float_column": [1.1, 2.2, 3.3],
+                "str_column": ["a", "b", "c"],
+            },
+        }
+    }
+    deserialized = MyModel.model_validate(payload)
+    assert deserialized.df.equals(df)
+
+
 def test_serialize_python():
     assert model.df.equals(df)
     serialized = model.model_dump(mode="python")
